@@ -1,0 +1,6 @@
+
+*.cache
+*.CopyComplete
+*.txt
+*.dll
+*.pdb
