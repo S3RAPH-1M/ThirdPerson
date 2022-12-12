@@ -330,8 +330,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crosshair.cs" />
     <Compile Include="TPPEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TPPUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

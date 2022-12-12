@@ -19,11 +19,20 @@ namespace ThirdPerson
         public ConfigEntry<KeyCode> FirstPersonADSBind { get; private set; }
         public ConfigEntry<KeyCode> SwapShoulderBind { get; private set; }
         public ConfigEntry<Boolean> SwapShoulder { get; private set; }
+        public ConfigEntry<Boolean> CrosshairEnabled { get; private set; }
         public static TPPEntry Instance { get; private set; }
         public Boolean IsInTPP { get; set; }
         public Boolean HasFPPAimed { get; set; }
         public ConfigEntry<float> Camera_ADS_Speed { get; private set; }
         public ConfigEntry<float> CameraUN_ADS_Speed { get; private set; }
+        public ConfigEntry<float> CrosshairSize { get; private set; }
+        public ConfigEntry<float> CrosshairThickness { get; private set; }
+        public ConfigEntry<float> CrosshairGap { get; private set; }
+        public ConfigEntry<Color> Crosshaircolor { get; private set; }
+        public static bool Enabled = false;
+
+
+
 
         public Vector3 TPPVector = new Vector3(0.0398f, 0.3402f, -1.4504f);
         public Vector3 AimingVector = new Vector3(0.2392f, 0.143f, -0.256f);
@@ -32,17 +41,25 @@ namespace ThirdPerson
         public void Awake()
         {
             Instance = this;
-            this.ThirdPerson = this.Config.Bind("Player | Misc", "Goto DayZ Style TPP", false);
-            this.FirstPersonADS = this.Config.Bind("Player | Misc", "ADS in First Person", false);
-            this.FirstPersonADSBind = this.Config.Bind("Player | Misc", "ADS First Person Bind", KeyCode.None);
-            this.ThirdPersonBind = this.Config.Bind("Player | Misc", "TPP Bind", KeyCode.None);
-            this.SwapShoulder = this.Config.Bind("Player | Misc", "Swap Shoulder Enabled", false);
-            this.SwapShoulderBind = this.Config.Bind("Player | Misc", "Swap Shoulder", KeyCode.None);
-            this.CameraUN_ADS_Speed = this.Config.Bind("Player | Misc", "Camera Un-ADS Speed", 6f);
-            this.Camera_ADS_Speed = this.Config.Bind("Player | Misc", "Camera ADS Speed", 6f);
+            this.ThirdPerson = this.Config.Bind("Camera Settings", "Goto TPP", false);
+            this.FirstPersonADS = this.Config.Bind("Camera Settings", "ADS in First Person", false);
+            this.FirstPersonADSBind = this.Config.Bind("Camera Settings", "ADS First Person Bind", KeyCode.None);
+            this.ThirdPersonBind = this.Config.Bind("Camera Settings", "TPP Bind", KeyCode.None);
+            this.SwapShoulder = this.Config.Bind("Camera Settings", "Swap Shoulder Enabled", false);
+            this.SwapShoulderBind = this.Config.Bind("Camera Settings", "Swap Shoulder", KeyCode.None);
+            this.CameraUN_ADS_Speed = this.Config.Bind("Camera Settings", "Camera Un-ADS Speed", 6f);
+            this.Camera_ADS_Speed = this.Config.Bind("Camera Settings", "Camera ADS Speed", 6f);
+            this.CrosshairEnabled = this.Config.Bind("Crosshair Settings", "Crosshair Enabled", false);
+            this.CrosshairSize = this.Config.Bind("Crosshair Settings", "Crosshair Size", 5f);
+            this.CrosshairThickness = this.Config.Bind("Crosshair Settings", "Crosshair Thickness", 1f);
+            this.CrosshairGap = this.Config.Bind("Crosshair Settings", "Crosshair Gap", 1f);
+            
             IsInTPP = false;
 
+
         }
+
+
 
         public void Update()
         {
@@ -71,6 +88,7 @@ namespace ThirdPerson
             }
 
 
+
             if (ThirdPerson.Value)
             {
                 Instance.LocalPlayer.PointOfView = EPointOfView.ThirdPerson;
@@ -87,13 +105,16 @@ namespace ThirdPerson
                             if (SwapShoulder.Value == true)
                             {
                                 Instance.LocalPlayer.CameraPosition.localPosition = Vector3.Lerp(Instance.LocalPlayer.CameraPosition.localPosition, AimingVectorLeft, cameraADSSpeed * Time.deltaTime);
+                                Instance.LocalPlayer.CameraPosition.localRotation = Quaternion.Lerp(Instance.LocalPlayer.CameraPosition.localRotation, Quaternion.identity, cameraADSSpeed * Time.deltaTime);
+
+
                             }
                             else if (SwapShoulder.Value == false)
                             {
-                            Instance.LocalPlayer.CameraPosition.localPosition = Vector3.Lerp(Instance.LocalPlayer.CameraPosition.localPosition, AimingVector, cameraADSSpeed * Time.deltaTime);
+                                Instance.LocalPlayer.CameraPosition.localPosition = Vector3.Lerp(Instance.LocalPlayer.CameraPosition.localPosition, AimingVector, cameraADSSpeed * Time.deltaTime);
+                                Instance.LocalPlayer.CameraPosition.localRotation = Quaternion.Lerp(Instance.LocalPlayer.CameraPosition.localRotation, Quaternion.identity, cameraADSSpeed * Time.deltaTime);
 
                             }
-
                         }
                         if (controller.IsAiming && FirstPersonADS.Value)
                         {
@@ -124,6 +145,13 @@ namespace ThirdPerson
                 IsInTPP = false;
             }
 
+        }
+        public void OnGUI()
+        {
+            if (Instance.LocalPlayer != null && Instance.LocalPlayer.HandsController is Player.FirearmController && CrosshairEnabled.Value)
+            {
+               Crosshair.Draw();
+            }
         }
     }
 }
