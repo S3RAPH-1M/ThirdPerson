@@ -53,7 +53,7 @@ namespace ThirdPerson
             this.CrosshairSize = this.Config.Bind("Crosshair Settings", "Crosshair Size", 5f);
             this.CrosshairThickness = this.Config.Bind("Crosshair Settings", "Crosshair Thickness", 1f);
             this.CrosshairGap = this.Config.Bind("Crosshair Settings", "Crosshair Gap", 1f);
-            
+            this.Crosshaircolor = this.Config.Bind("Crosshair Settings", "Crosshair Color", Color.green);
             IsInTPP = false;
 
 
@@ -88,8 +88,9 @@ namespace ThirdPerson
             }
 
 
+            Instance.LocalPlayer.HitReaction.enabled = Instance.LocalPlayer.PointOfView != EPointOfView.ThirdPerson;
 
-            if (ThirdPerson.Value)
+            if (this.LocalPlayer != null && this.LocalPlayer.CameraContainer != null && this.LocalPlayer.ActiveHealthController != null && ThirdPerson.Value)
             {
                 Instance.LocalPlayer.PointOfView = EPointOfView.ThirdPerson;
                 IsInTPP = true;

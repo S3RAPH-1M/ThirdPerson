@@ -56,6 +56,7 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>E:\Games\SPT\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="BepInEx">
       <HintPath>E:\Games\SPT\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>

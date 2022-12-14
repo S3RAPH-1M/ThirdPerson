@@ -10,10 +10,6 @@ namespace ThirdPerson
 {
     public static class Crosshair
     {
-        public static float CrosshairSize = TPPEntry.Instance.CrosshairSize.Value;
-        public static float CrosshairThickness = TPPEntry.Instance.CrosshairThickness.Value;
-        public static float CrosshairGap = TPPEntry.Instance.CrosshairGap.Value;
-        public static Color color = Color.cyan;
 
         public static void Draw()
         {
@@ -30,7 +26,7 @@ namespace ThirdPerson
             {
 
                 Ray r = new Ray(firearmcontroller.Fireport.position, firearmcontroller.WeaponDirection * 1f);
-                if (!Physics.Raycast(r, out RaycastHit Hit, float.MaxValue, GClass2394.HitMask))
+                if (!Physics.Raycast(r, out RaycastHit Hit, float.MaxValue, GClass2400.HitMask))
                 {
                     return;
                 }
@@ -40,21 +36,21 @@ namespace ThirdPerson
                     return;
                 }
 
-                Vector2 PointA = new Vector2(Mathf.Round(HitPoint.x - CrosshairGap), Mathf.Round(Screen.height - HitPoint.y));
-                Vector2 PointB = new Vector2(Mathf.Round(HitPoint.x - CrosshairGap - CrosshairSize), Mathf.Round(Screen.height - HitPoint.y));
-                TPPUtils.DrawLine(PointA, PointB, color, CrosshairThickness);
+                Vector2 PointA = new Vector2(Mathf.Round(HitPoint.x - TPPEntry.Instance.CrosshairGap.Value), Mathf.Round(Screen.height - HitPoint.y));
+                Vector2 PointB = new Vector2(Mathf.Round(HitPoint.x - TPPEntry.Instance.CrosshairGap.Value - TPPEntry.Instance.CrosshairSize.Value), Mathf.Round(Screen.height - HitPoint.y));
+                TPPUtils.DrawLine(PointA, PointB, TPPEntry.Instance.Crosshaircolor.Value, TPPEntry.Instance.CrosshairThickness.Value);
 
-                PointA = new Vector2(Mathf.Round(HitPoint.x + CrosshairGap), Mathf.Round(Screen.height - HitPoint.y));
-                PointB = new Vector2(Mathf.Round(HitPoint.x + CrosshairGap + CrosshairSize), Mathf.Round(Screen.height - HitPoint.y));
-                TPPUtils.DrawLine(PointA, PointB, color, CrosshairThickness);
+                PointA = new Vector2(Mathf.Round(HitPoint.x + TPPEntry.Instance.CrosshairGap.Value), Mathf.Round(Screen.height - HitPoint.y));
+                PointB = new Vector2(Mathf.Round(HitPoint.x + TPPEntry.Instance.CrosshairGap.Value + TPPEntry.Instance.CrosshairSize.Value), Mathf.Round(Screen.height - HitPoint.y));
+                TPPUtils.DrawLine(PointA, PointB, TPPEntry.Instance.Crosshaircolor.Value, TPPEntry.Instance.CrosshairThickness.Value);
 
-                PointA = new Vector2(Mathf.Round(HitPoint.x), Mathf.Round(Screen.height - HitPoint.y - CrosshairGap));
-                PointB = new Vector2(Mathf.Round(HitPoint.x), Mathf.Round(Screen.height - HitPoint.y - CrosshairGap - CrosshairSize));
-                TPPUtils.DrawLine(PointA, PointB, color, CrosshairThickness);
+                PointA = new Vector2(Mathf.Round(HitPoint.x), Mathf.Round(Screen.height - HitPoint.y - TPPEntry.Instance.CrosshairGap.Value));
+                PointB = new Vector2(Mathf.Round(HitPoint.x), Mathf.Round(Screen.height - HitPoint.y - TPPEntry.Instance.CrosshairGap.Value - TPPEntry.Instance.CrosshairSize.Value));
+                TPPUtils.DrawLine(PointA, PointB, TPPEntry.Instance.Crosshaircolor.Value, TPPEntry.Instance.CrosshairThickness.Value);
 
-                PointA = new Vector2(Mathf.Round(HitPoint.x), Mathf.Round(Screen.height - HitPoint.y + CrosshairGap));
-                PointB = new Vector2(Mathf.Round(HitPoint.x), Mathf.Round(Screen.height - HitPoint.y + CrosshairGap + CrosshairSize));
-                TPPUtils.DrawLine(PointA, PointB, color, CrosshairThickness);
+                PointA = new Vector2(Mathf.Round(HitPoint.x), Mathf.Round(Screen.height - HitPoint.y + TPPEntry.Instance.CrosshairGap.Value));
+                PointB = new Vector2(Mathf.Round(HitPoint.x), Mathf.Round(Screen.height - HitPoint.y + TPPEntry.Instance.CrosshairGap.Value + TPPEntry.Instance.CrosshairSize.Value));
+                TPPUtils.DrawLine(PointA, PointB, TPPEntry.Instance.Crosshaircolor.Value, TPPEntry.Instance.CrosshairThickness.Value);
             }
 
 
